@@ -19,8 +19,11 @@
 
 ## APP Interface
 
-![App Interface](https://github.com/SeekAI-786/Resume-Analyzer/blob/main/r1.png)
 ![App Interface](https://github.com/SeekAI-786/Resume-Analyzer/blob/main/r2.png)
+
+---
+
+![App Interface](https://github.com/SeekAI-786/Resume-Analyzer/blob/main/r1.png)
 
 
 ---
