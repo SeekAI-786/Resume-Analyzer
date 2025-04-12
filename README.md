@@ -17,6 +17,13 @@
 
 ---
 
+## APP Interface
+
+![App Interface](https://github.com/SeekAI-786/Resume-Analyzer/blob/main/r1.png)
+![App Interface](https://github.com/SeekAI-786/Resume-Analyzer/blob/main/r2.png)
+
+
+---
 ## How It Works
 
 1. Users input a job description and upload up to 10 resumes.
