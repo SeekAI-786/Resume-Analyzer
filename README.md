@@ -35,7 +35,7 @@
 ### Requirements
 
 - Python 3.7 or higher
-- Required Python packages (see below)
+- Required Python packages (Check Requirements.txt)
 
 ### Installation
 
