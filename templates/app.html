@@ -1,1 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Analyzer</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --background-color: #f5f6fa;
+            --text-color: #2c3e50;
+            --success-color: #2ecc71;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            width: 100%;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+            resize: none;
+            box-sizing: border-box;
+        }
+
+        textarea:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+
+        .file-upload-container {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            margin-bottom: 15px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .resume-list {
+            margin-top: 15px;
+        }
+
+        .resume-item {
+            background: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            border: 1px solid #eee;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .results {
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .results h3 {
+            color: var(--primary-color);
+            margin: 0;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.2s ease;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .resume-name {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .score {
+            color: var(--success-color);
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background-color: #e8f5e9;
+        }
+
+        .features {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .features h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .features ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .features li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .features li:before {
+            content: "✓";
+            color: var(--secondary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .error {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+
+        .success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        form {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Resume Analyzer</h1>
+            <p class="description">
+                Upload multiple resumes and enter a job description to find the best matches. 
+                Our AI-powered system will analyze and rank resumes based on relevance.
+            </p>
+        </div>
+
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="jobDescription">Job Description:</label>
+                <textarea id="jobDescription" name="resumeText" placeholder="Enter the job description here..." required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Upload Resumes (PDF, DOCX, TXT):</label>
+                <div class="file-upload-container">
+                    <input type="file" name="resumeFile" accept=".pdf,.docx,.txt" multiple>
+                    <small>You can select up to 10 resumes at once</small>
+                </div>
+            </div>
+
+            <button type="submit">Analyze Resumes</button>
+        </form>
+
+        {% if message %}
+            <div class="message {% if top_r %}success{% else %}error{% endif %}">
+                {% if not top_r %}
+                    {{ message }}
+                {% endif %}
+                {% if top_r %}
+                    <div class="results" style="display: block;">
+                        <h3>Top Matching Resumes:</h3>
+                        {% for i in range(top_r|length) %}
+                            <div class="result-item">
+                                <div class="resume-name">{{ top_r[i] }}</div>
+                                <div class="score">Match Score: {{ "%.2f"|format(similarity_scores[i]) }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <div class="features">
+            <h3>What our analyzer can do for you:</h3>
+            <ul>
+                <li>Match resumes with job descriptions using AI</li>
+                <li>Rank resumes based on relevance</li>
+                <li>Support multiple resume formats (PDF, DOCX, TXT)</li>
+                <li>Process up to 10 resumes simultaneously</li>
+                <li>Provide clear scoring and ranking</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
 
